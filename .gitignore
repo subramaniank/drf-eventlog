@@ -1,1 +1,4 @@
 *~
+
+.tox/
+drf_eventlog.egg-info/
