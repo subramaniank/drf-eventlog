@@ -23,16 +23,5 @@ class TestEventLog(object):
         test_auto_increment.clash = True
         test_auto_increment.save()
 
-
-        test_log = Log()
-        test_log.obj = test_auto_increment
-        test_log.object_id = test_auto_increment.pk
-        #test_log.save()
-        
-        for model in models.get_models(include_auto_created=True):
-            try:
-                log.debug(model._meta.db_table)
-            except Exception as e:
-                pass
-        #eventlogger.log("CREATED",test_auto_increment,"A new object was created here")
+        eventlogger.log("CREATED",test_auto_increment,"A new object was created here")
         

@@ -1,3 +1,4 @@
+import time
 from django.db import models
 
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -21,6 +22,8 @@ class Log(models.Model):
         ordering = ['-timestamp']
 
     def save(self, *args, **kwargs):
+        self.timestamp = time.time()
         event_logged.send_robust(sender=Log, event=self)
         super(Log, self).save(*args, **kwargs)
+
         
