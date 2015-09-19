@@ -45,7 +45,10 @@ setup(
     author_email='baathai@gmail.com',  
     packages=get_packages('drf_eventlog'),
     package_data=get_package_data('drf_eventlog'),
-    install_requires=[],
+    install_requires=[
+        'djangorestframework >= 3.2.3',
+        'django-filter >= 0.11.0'
+    ],
     zip_safe=False,
     classifiers=[
         'Environment :: Web Environment',
