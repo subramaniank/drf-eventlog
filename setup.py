@@ -42,7 +42,8 @@ setup(
     version=version,
     description='Log events in your app and get REST APIs with filtering for them.',
     author='K Subramanian',
-    author_email='baathai@gmail.com',  
+    author_email='baathai@gmail.com',
+    url='http://subramaniank.github.io',
     packages=get_packages('drf_eventlog'),
     package_data=get_package_data('drf_eventlog'),
     install_requires=[
