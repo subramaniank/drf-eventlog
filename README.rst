@@ -1,11 +1,11 @@
 .. image:: https://travis-ci.org/subramaniank/drf-eventlog.svg?branch=master
-    :target: https://travis-ci.org/subramaniank/drf-eventlog
+   :target: https://travis-ci.org/subramaniank/drf-eventlog
 
 .. image:: https://coveralls.io/repos/subramaniank/drf-eventlog/badge.svg?branch=master&service=github
-  :target: https://coveralls.io/github/subramaniank/drf-eventlog?branch=master
+   :target: https://coveralls.io/github/subramaniank/drf-eventlog?branch=master
 
-  .. image:: https://badge.fury.io/py/drf_eventlog.svg
-    :target: http://badge.fury.io/py/drf_eventlog
+.. image:: https://badge.fury.io/py/drf_eventlog.svg
+   :target: http://badge.fury.io/py/drf_eventlog
 
 
 =========
