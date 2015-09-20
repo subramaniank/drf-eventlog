@@ -1,10 +1,11 @@
 import time
-from django.db import models
 
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
 
 from .signals import event_logged
+
 
 class Log(models.Model):
     """
@@ -17,7 +18,7 @@ class Log(models.Model):
     event = models.CharField(max_length=50, db_index=True)
     details = models.TextField(null=True)
     timestamp = models.BigIntegerField(db_index=True)
-    
+
     class Meta:
         ordering = ['-timestamp']
 
@@ -25,5 +26,3 @@ class Log(models.Model):
         self.timestamp = time.time()
         event_logged.send_robust(sender=Log, event=self)
         super(Log, self).save(*args, **kwargs)
-
-        

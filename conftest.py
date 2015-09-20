@@ -1,10 +1,5 @@
 import django
-import pytest
-from django.db import models
-
 from django.conf import settings
-
-import os
 
 DEFAULT_SETTINGS = dict(
     INSTALLED_APPS=(
@@ -23,6 +18,11 @@ DEFAULT_SETTINGS = dict(
     },
     SITE_ID=1,
     ROOT_URLCONF="drf_eventlog.tests.urls",
+    # REST_FRAMEWORK = {
+    #         'DEFAULT_AUTHENTICATION_CLASSES': (
+    #                 'drf_eventlog.tests.authentication.TestAppAuthentication',
+    #         )
+    # },    
     SECRET_KEY="notasecret",
 )
 

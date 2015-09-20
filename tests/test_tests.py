@@ -1,35 +1,56 @@
-from django.db import models
-from drf_eventlog.logger import eventlogger as eventlogger
-from django.db.models.loading import cache
+import json
+import logging
+import uuid
 
 import pytest
+from rest_framework.renderers import JSONRenderer
 
-import logging
- 
+from drf_eventlog.logger import eventlogger as eventlogger
+from drf_eventlog.tests.models import TestAutoIncrementModel, TestUUIDPKModel
+from drf_eventlog.tests.serializers import TestUUIDPKModelSerializer
+
 logging.basicConfig(level=logging.DEBUG)
 
-from drf_eventlog.models import Log
-from drf_eventlog.tests.models import TestAutoIncrementModel
 
 logger = logging.getLogger('test_eventlog')
 
+
+@pytest.mark.django_db
 class TestEventLog(object):
 
-    @pytest.mark.django_db
-    def test_autoincrement_model(self):
+    def test_autoincrement_model(self, client):
 
         test_auto_increment = TestAutoIncrementModel()
         test_auto_increment.name = "Subramanian"
         test_auto_increment.rank = 1
         test_auto_increment.clash = True
         test_auto_increment.save()
-        eventlogger.log("CREATED",test_auto_increment,"A new object was created here")
+        eventlogger.log("CREATED", test_auto_increment, "A new object was created here")
 
-
-    @pytest.mark.django_db
-    def test_client(self, client):
-        logger.debug('What the ')
         response = client.get('/eventlog/')
         assert response.status_code == 200
+        resp_dict = json.loads(response.content)
+        assert len(resp_dict) == 1
+        first_obj = resp_dict[0]
+        assert first_obj['object_id'] == "1"
+        assert first_obj['event'] == "CREATED"
+        assert first_obj['details'] == "A new object was created here"
 
+    def test_uuid_pk_model(self, client):
 
+        test_uuid_pk = TestUUIDPKModel()
+        test_uuid_pk.id = str(uuid.uuid4())
+        test_uuid_pk.text = "This is a new UUID"
+        test_uuid_pk.save()
+
+        eventlogger.log("CREATED", test_uuid_pk, "Creation of object")
+
+        test_uuid_pk.text = "Text changed"
+
+        serialized_data = TestUUIDPKModelSerializer(instance=test_uuid_pk).data
+        model_json = JSONRenderer().render(serialized_data)
+        eventlogger.log("UPDATING", test_uuid_pk, model_json)
+
+        response = client.get('/eventlog/')
+        logger.debug(response.content)
+        assert response.status_code == 200
