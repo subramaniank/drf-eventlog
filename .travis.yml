@@ -8,7 +8,8 @@ env:
   - DJANGO=1.8
   - DJANGO=master
 install:
-  - pip install tox coveralls
+  - pip install tox 
+  - pip install 'coveralls<4'
 script:
   - tox
 after_success:
