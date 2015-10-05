@@ -29,7 +29,7 @@ class TestEventLog(object):
 
         response = client.get('/eventlog/')
         assert response.status_code == 200
-        resp_dict = json.loads(response.content)
+        resp_dict = json.loads(str(response.content))
         assert len(resp_dict) == 1
         first_obj = resp_dict[0]
         assert first_obj['object_id'] == "1"
