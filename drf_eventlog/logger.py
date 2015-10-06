@@ -2,6 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 
 from .models import Log
 
+import logging 
 
 class EventLogger(object):
     """
@@ -15,8 +16,9 @@ class EventLogger(object):
 
         if obj is not None:
             content_type = ContentType.objects.get_for_model(obj)
-            event_log.obj = content_type
-            object_id = obj.pk
+            content_obj = content_type.get_object_for_this_type(pk=obj.id)
+            event_log.obj = content_obj
+            object_id = content_obj.pk
 
         event_log.object_id = object_id
         event_log.save()

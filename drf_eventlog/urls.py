@@ -1,6 +1,3 @@
-from rest_framework import routers
+from .routers import EventLogRouter
 
-from .views import EventLogViewSet
-
-eventlog_router = routers.DefaultRouter()
-eventlog_router.register('eventlog', EventLogViewSet)
+eventlog_router = EventLogRouter()

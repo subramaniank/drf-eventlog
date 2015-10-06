@@ -12,9 +12,6 @@ from drf_eventlog.tests.serializers import TestUUIDPKModelSerializer
 logging.basicConfig(level=logging.DEBUG)
 
 
-logger = logging.getLogger('test_eventlog')
-
-
 @pytest.mark.django_db
 class TestEventLog(object):
 
@@ -52,5 +49,14 @@ class TestEventLog(object):
         eventlogger.log("UPDATING", test_uuid_pk, model_json)
 
         response = client.get('/eventlog/')
-        logger.debug(response.content)
         assert response.status_code == 200
+
+        response = client.get('/eventlog/tests/testuuidpkmodel/{0}/'.format(test_uuid_pk.pk))
+        assert response.status_code == 200
+        resp = json.loads(response.content)
+        assert resp[0]['object_id'] == test_uuid_pk.pk
+        assert resp[0]['details'] == "Creation of object"
+
+        assert resp[1]['object_id'] == test_uuid_pk.pk
+        assert resp[1]['details'] == model_json
+        #== '[{"id":1,"object_id":"c04abde9-fc58-4226-a96c-ad5015fbf1e8","event":"CREATED","details":"Creation of object","timestamp":1444133659,"content_type":3},{"id":2,"object_id":"c04abde9-fc58-4226-a96c-ad5015fbf1e8","event":"UPDATING","details":"{\\"id\\":\\"c04abde9-fc58-4226-a96c-ad5015fbf1e8\\",\\"text\\":\\"Text changed\\"}","timestamp":1444133659,"content_type":3}]'

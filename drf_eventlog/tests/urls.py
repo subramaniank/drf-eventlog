@@ -10,3 +10,5 @@ urlpatterns = patterns(
 )
 
 urlpatterns += eventlog_router.urls
+
+
