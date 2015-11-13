@@ -27,3 +27,16 @@ Add ``drf_eventlog``, ``django_filters``, and ``rest_framework`` to ``INSTALLED_
 		python manage.py migrate
 
 Migrate DB to create drf_eventlog db models.
+
+**Usage**
+
+.. code-block
+    def log(self, event, obj, details=None):
+
+
+``log`` method takes an event name/tag, the ``obj`` is the object in reference to which the audit event happens.
+In addition, details is a TextField.
+
+.. code-block:: python
+		from drf_eventlog.logger import eventlogger
+		eventlogger.log("UPDATING", test_uuid_pk, model_json)
