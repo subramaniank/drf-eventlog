@@ -8,6 +8,9 @@
    :target: http://badge.fury.io/py/drf_eventlog
 
 
+.. header:: Dead 💀 Never really lived
+
+
 =========
 drf-eventlog
 =========
