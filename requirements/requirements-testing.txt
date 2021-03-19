@@ -1,4 +1,4 @@
-djangorestframework==3.2.3
+djangorestframework==3.11.2
 django-filter==0.11.0
 # PyTest for running the tests.
 pytest
